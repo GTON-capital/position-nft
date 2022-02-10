@@ -1,9 +1,9 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
-describe("Greeter", function () {
+describe("PositionNFT", function () {
   it("Should return the new greeting once it's changed", async function () {
-    const Greeter = await ethers.getContractFactory("Greeter");
+    const Greeter = await ethers.getContractFactory("PositionNFT");
     const greeter = await Greeter.deploy("Hello, world!");
     await greeter.deployed();
 
@@ -16,16 +16,4 @@ describe("Greeter", function () {
 
     expect(await greeter.greet()).to.equal("Hola, mundo!");
   });
-
-  it("Should compare what GreeterMock and Greeter has same behaviour", async function () {
-    const Greeter = await ethers.getContractFactory("Greeter");
-    const GreeterMock = await ethers.getContractFactory("GreeterMock");
-    const greeter = await Greeter.deploy("Hello, world!");
-    await greeter.deployed();
-    const greeterMock = await GreeterMock.deploy("Hello, world!");
-    await greeterMock.deployed();
-
-    expect(await greeter.greet()).to.equal(await greeterMock.greet());
-  });
-
 });
