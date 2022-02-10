@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
-///@notice Inspired by Uniswap-v3-periphery NFTSVG.sol
 pragma solidity 0.8.11;
-pragma abicoder v2;
+// pragma abicoder v2;
 
 import '@openzeppelin/contracts/utils/Strings.sol';
 import 'base64-sol/base64.sol';
@@ -26,7 +25,6 @@ library NFTSVG {
                 abi.encodePacked(
                     generateSVGDefs(params),
                     generateSVGFigures(params),
-                    generateSVGRareMark(params.tokenId, params.uToken),
                     '</svg>'
                 )
             );
@@ -109,20 +107,5 @@ library NFTSVG {
                 '<path d="M255.584 109.054L181.703 222.338L255.584 179.974V109.054Z"/><path opacity="0.6" d="M255.584 179.975L329.468 222.341L255.584 109V179.975Z"/></g>'
             )
         );
-    }
-
-    function generateSVGRareMark(uint256 tokenId, string memory tokenAddress) private pure returns (string memory svg) {
-        if (isRare(tokenId, tokenAddress)) {
-            svg = string(
-                abi.encodePacked('<rect x="16" y="16" width="258" height="468" rx="26" ry="26" fill="black" />')
-            );
-        } else {
-            svg = '';
-        }
-    }
-
-    function isRare(uint256 tokenId, string memory tokenAddress) internal pure returns (bool) {
-        // return uint256(keccak256(abi.encodePacked(tokenId, tokenAddress))) < type(uint256).max / 10;
-        return false;
     }
 }
