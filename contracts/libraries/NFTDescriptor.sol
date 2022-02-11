@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.11;
-pragma abicoder v2;
 
 import '@openzeppelin/contracts/utils/Strings.sol';
 import 'base64-sol/base64.sol';
