@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// IMPORTED FROM Uniswap-v3-periphery
+// Based on Uniswap-v3-periphery
 pragma solidity 0.8.11;
 
 library HexStrings {

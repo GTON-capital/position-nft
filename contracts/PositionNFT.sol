@@ -43,7 +43,7 @@ contract PositionNFT is NFT, INFTManager, ReentrancyGuard {
             NFTDescriptor.constructTokenURI(
                 NFTDescriptor.URIParams({
                     tokenId: tokenId,
-                    blockNumber: block.number,
+                    stakingPeriodInDays: 7,
                     stakeAmount: STAKE_AMOUNT,
                     uTokenSymbol: "GTON",
                     uTokenAddress: address(uToken)

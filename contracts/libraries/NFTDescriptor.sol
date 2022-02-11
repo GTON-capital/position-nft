@@ -4,7 +4,7 @@ pragma solidity 0.8.11;
 import '@openzeppelin/contracts/utils/Strings.sol';
 import 'base64-sol/base64.sol';
 import './HexStrings.sol';
-import './NFTSVG.sol';
+import './SVGSupplier.sol';
 
 library NFTDescriptor {
     // using Strings for uint256;
@@ -12,7 +12,7 @@ library NFTDescriptor {
 
     struct URIParams {
         uint256 tokenId;
-        uint256 blockNumber;
+        uint256 stakingPeriodInDays;
         uint256 stakeAmount;
         address uTokenAddress;
         string uTokenSymbol;
@@ -86,10 +86,10 @@ library NFTDescriptor {
     }
 
     function generateSVGImage(URIParams memory params) internal pure returns (string memory svg) {
-        NFTSVG.SVGParams memory svgParams =
-            NFTSVG.SVGParams({
+        SVGSupplier.SVGParams memory svgParams =
+            SVGSupplier.SVGParams({
                 tokenId: params.tokenId,
-                blockNumber: params.blockNumber,
+                stakingPeriodInDays: params.stakingPeriodInDays,
                 stakeAmount: params.stakeAmount,
                 uToken: addressToString(params.uTokenAddress),
                 uTokenSymbol: params.uTokenSymbol,
@@ -97,6 +97,6 @@ library NFTDescriptor {
                 color1: toColorHex(uint256(keccak256(abi.encodePacked(params.uTokenAddress, params.tokenId))), 0)
             });
 
-        return NFTSVG.generateSVG(svgParams);
+        return SVGSupplier.generateSVG(svgParams);
     }
 }
