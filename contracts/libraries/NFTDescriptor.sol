@@ -79,8 +79,8 @@ library NFTDescriptor {
         return
             string(
                 abi.encodePacked(
-                    'This NFT represents a liquidity in stETH pool ',
-                    'The owner of this NFT can remove the liquidity.\\n'
+                    'This NFT represents a position in GTON token boinding ',
+                    'The owner of this NFT can claim sGTON after bond expiration.\\n'
                 )
             );
     }
