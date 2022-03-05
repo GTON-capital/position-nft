@@ -20,21 +20,21 @@ contract GTONBondNFT is NFT, IBondStorage, AdminAccess {
     uint public tokenCounter = 0;
     mapping(address => uint[]) public userIds;
     mapping(uint => address) public issuedBy;
-    mapping(uint => uint) public bondPeriod;
-    mapping(uint => uint) public bondValue;
+    mapping(uint => uint) public releaseTimestamps;
+    mapping(uint => uint) public rewards;
 
     function userIdsLength(address user) public view returns(uint) {
         return userIds[user].length;
     }
 
     /* ========== MUTATIVE FUNCTIONS ========== */
-    function mint(address to, uint period, uint value) public onlyAdminOrOwner returns(uint tokenId) {
+    function mint(address to, uint releaseTimestamp, uint reward) public onlyAdminOrOwner returns(uint tokenId) {
         tokenId = tokenCounter;
         _safeMint(to, tokenCounter);
         userIds[to].push(tokenId);
         issuedBy[tokenId] = msg.sender;
-        bondPeriod[tokenId] = period;
-        bondValue[tokenId] = value;
+        releaseTimestamps[tokenId] = releaseTimestamp;
+        rewards[tokenId] = reward;
         // it always increases and we will never mint the same id
         tokenCounter++;
     }
@@ -49,8 +49,8 @@ contract GTONBondNFT is NFT, IBondStorage, AdminAccess {
             NFTDescriptor.constructTokenURI(
                 NFTDescriptor.URIParams({
                     tokenId: tokenId,
-                    bondingPeriodInDays: bondPeriod[tokenId],
-                    bondAmount: bondValue[tokenId],
+                    releaseTimestamp: releaseTimestamps[tokenId],
+                    reward: rewards[tokenId],
                     tokenSymbol: "GTON"
                 })
             );
