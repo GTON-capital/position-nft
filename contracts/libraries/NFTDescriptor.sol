@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.11;
+pragma solidity 0.8.12;
 
 import '@openzeppelin/contracts/utils/Strings.sol';
 import 'base64-sol/base64.sol';
@@ -12,14 +12,13 @@ library NFTDescriptor {
 
     struct URIParams {
         uint256 tokenId;
-        uint256 stakingPeriodInDays;
-        uint256 stakeAmount;
-        address uTokenAddress;
-        string uTokenSymbol;
+        uint256 bondingPeriodInDays;
+        uint256 bondAmount;
+        string tokenSymbol;
     }
 
     function constructTokenURI(URIParams memory params) public pure returns (string memory) {
-        string memory name = string(abi.encodePacked(params.uTokenSymbol, '-NFT'));
+        string memory name = string(abi.encodePacked(params.tokenSymbol, '-NFT'));
         string memory description = generateDescription();
         string memory image = Base64.encode(bytes(generateSVGImage(params)));
 
@@ -89,12 +88,11 @@ library NFTDescriptor {
         SVGSupplier.SVGParams memory svgParams =
             SVGSupplier.SVGParams({
                 tokenId: params.tokenId,
-                stakingPeriodInDays: params.stakingPeriodInDays,
-                stakeAmount: params.stakeAmount,
-                uToken: addressToString(params.uTokenAddress),
-                uTokenSymbol: params.uTokenSymbol,
-                color0: toColorHex(uint256(keccak256(abi.encodePacked(params.uTokenAddress, params.tokenId))), 136),
-                color1: toColorHex(uint256(keccak256(abi.encodePacked(params.uTokenAddress, params.tokenId))), 0)
+                bondingPeriodInDays: params.bondingPeriodInDays,
+                bondAmount: params.bondAmount,
+                tokenSymbol: params.tokenSymbol,
+                color0: toColorHex(uint256(keccak256(abi.encodePacked(address(0), params.tokenId))), 136),
+                color1: toColorHex(uint256(keccak256(abi.encodePacked(address(0), params.tokenId))), 0)
             });
 
         return SVGSupplier.generateSVG(svgParams);

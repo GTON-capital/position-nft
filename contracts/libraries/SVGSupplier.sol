@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.11;
+pragma solidity 0.8.12;
 
 import '@openzeppelin/contracts/utils/Strings.sol';
 import 'base64-sol/base64.sol';
@@ -10,10 +10,9 @@ library SVGSupplier {
 
     struct SVGParams {
         uint256 tokenId;
-        uint256 stakingPeriodInDays;
-        uint256 stakeAmount;
-        string uToken;
-        string uTokenSymbol;
+        uint256 bondingPeriodInDays;
+        uint256 bondAmount;
+        string tokenSymbol;
         string color0;
         string color1;
     }
@@ -82,9 +81,11 @@ library SVGSupplier {
         svg = string(
             abi.encodePacked(
                 '<g fill="black" font-family="Impact" font-size="24"><text x="20" y="40" >',
-                params.uTokenSymbol,
-                '</text><text x="20" y="70">Staking period, days: ',
-                params.stakingPeriodInDays.toString(),
+                params.tokenSymbol,
+                '</text><text x="20" y="70">Bonding period, days: ',
+                params.bondingPeriodInDays.toString(),
+                '</text><text x="20" y="100">Bond value, GTON: ',
+                params.bondAmount.toString(),
                 '</text><text x="20" y="482">ID: ',
                 params.tokenId.toString(),
                 '</text></g>'
