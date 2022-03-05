@@ -9,7 +9,7 @@ import './libraries/NFTDescriptor.sol';
 import './interfaces/IBondStorage.sol';
 import './interfaces/AdminAccess.sol';
 
-contract PositionNFT is NFT, IBondStorage, AdminAccess {
+contract GTONBondNFT is NFT, IBondStorage, AdminAccess {
 
     using SafeERC20 for IERC20;
 

@@ -1,8 +1,8 @@
 require("@nomiclabs/hardhat-waffle");
-
+require("@nomiclabs/hardhat-etherscan");
 require("dotenv").config()
 
-const { PRIVATEKEY } = process.env;
+const { PRIVATEKEY, ETHERSCAN, POLYGONSCAN, FTMSCAN } = process.env;
 
 /**
  * @type import('hardhat/config').HardhatUserConfig
@@ -15,7 +15,23 @@ module.exports = {
     mumbai: {
       networkId: 80001,
       url: "https://rpc-mumbai.matic.today",
-      accounts: [PRIVATEKEY]
+      accounts: [PRIVATEKEY],
+      gasPrice: 35000000000,
+    }
+  },
+  etherscan: {
+    apiKey: {
+        mainnet: ETHERSCAN,
+        ropsten: ETHERSCAN,
+        rinkeby: ETHERSCAN,
+        goerli: ETHERSCAN,
+        kovan: ETHERSCAN,
+        // ftm
+        opera: FTMSCAN,
+        ftmTestnet: FTMSCAN,
+        // polygon
+        polygon: POLYGONSCAN,
+        polygonMumbai: POLYGONSCAN,
     }
   },
   solidity: {
