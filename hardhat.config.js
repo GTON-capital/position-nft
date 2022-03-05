@@ -14,7 +14,7 @@ module.exports = {
     },
     mumbai: {
       networkId: 80001,
-      url: "https://rpc-mumbai.matic.today",
+      url: "https://matic-mumbai.chainstacklabs.com",
       accounts: [PRIVATEKEY],
       gasPrice: 35000000000,
     }

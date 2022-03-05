@@ -13,6 +13,6 @@ describe("BondNFT", function () {
       },
     });
     const bondNFT = await BondNFT.deploy();
-    await bondNFT.deployed();
+    await bondNFT.deployed("gtonNFT", "gtonNFT");
   });
 });

@@ -18,15 +18,17 @@ async function main() {
       NFTDescriptor: nftDescriptorLib.address,
     },
   });
-  const bondNFT = await BondNFT.deploy();
+  const bondNFT = await BondNFT.deploy("gtonNFT", "gtonNFT");
   await bondNFT.deployed();
 
   console.log("Token address: ", bondNFT.address);
 
   await hre.run("verify:verify", {
     address: bondNFT.address,
-    network: polygonMumbai,
+    network: "polygonMumbai",
     constructorArguments: [
+      "gtonNFT",
+      "gtonNFT",
     ],
     libraries: {
       NFTDescriptor: nftDescriptorLib.address,
