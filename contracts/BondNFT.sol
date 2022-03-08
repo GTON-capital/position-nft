@@ -21,7 +21,6 @@ contract GTONBondNFT is NFT, IBondStorage, AdminAccess {
     }
 
     /* ========== STATE VARIABLES ========== */
-    uint public tokenCounter = 0;
     mapping(address => uint[]) public userIds;
     mapping(uint => address) public issuedBy;
     mapping(uint => string) public releaseDates;
@@ -34,8 +33,7 @@ contract GTONBondNFT is NFT, IBondStorage, AdminAccess {
 
     /* ========== MUTATIVE FUNCTIONS ========== */
     function mint(address to, uint releaseTimestamp, uint reward) public onlyAdminOrOwner returns(uint tokenId) {
-        tokenId = tokenCounter;
-        _safeMint(to, tokenCounter);
+        tokenId = _safeMint(to, '');
         userIds[to].push(tokenId);
         issuedBy[tokenId] = msg.sender;
         (uint year, uint month, uint day) = BokkyPooBahsDateTimeLibrary.timestampToDate(releaseTimestamp);
@@ -49,8 +47,6 @@ contract GTONBondNFT is NFT, IBondStorage, AdminAccess {
             )
         );
         rewards[tokenId] = reward;
-        // it always increases and we will never mint the same id
-        tokenCounter++;
     }
 
     function transfer(address to, uint tokenId) public {

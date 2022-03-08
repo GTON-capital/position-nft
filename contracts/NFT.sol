@@ -2,9 +2,10 @@
 pragma solidity 0.8.12;
 
 import '@openzeppelin/contracts/token/ERC721/ERC721.sol';
+import '@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol';
 import '@openzeppelin/contracts/utils/Counters.sol';
 
-abstract contract NFT is ERC721 {
+abstract contract NFT is ERC721, ERC721Burnable {
     using Counters for Counters.Counter;
 
     Counters.Counter private _tokenIdTracker;
@@ -12,10 +13,11 @@ abstract contract NFT is ERC721 {
     constructor(string memory _name, string memory _symbol) ERC721(_name, _symbol) {
     }
 
-    function _safeMint(address to, bytes memory data) internal virtual {
+    function _safeMint(address to, bytes memory data) internal virtual returns (uint256) {
         uint256 currentId = _tokenIdTracker.current();
         super._safeMint(to, currentId, data);
         _tokenIdTracker.increment();
+        return currentId;
     }
 
     function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
