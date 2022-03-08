@@ -23,6 +23,9 @@ async function main() {
 
   console.log("Token address: ", bondNFT.address);
 
+  // The delay is necessary to avoid "the address does not have bytecode" error
+  await delay(30000);
+
   await hre.run("verify:verify", {
     address: bondNFT.address,
     network: "polygonMumbai",
@@ -35,6 +38,8 @@ async function main() {
     }
   });
 }
+
+const delay = ms => new Promise(res => setTimeout(res, ms));
 
 main()
   .then(() => process.exit(0))
