@@ -16,7 +16,8 @@ contract GTONBondNFT is NFT, IBondStorage, AdminAccess {
     using SafeERC20 for IERC20;
     using Strings for uint256;
 
-    constructor(string memory _name, string memory _symbol) NFT(_name, _symbol) {
+    constructor(string memory _name, string memory _symbol, string memory _bondTokenSymbol) NFT(_name, _symbol) {
+        bondTokenSymbol = _bondTokenSymbol;
     }
 
     /* ========== STATE VARIABLES ========== */
@@ -25,6 +26,7 @@ contract GTONBondNFT is NFT, IBondStorage, AdminAccess {
     mapping(uint => address) public issuedBy;
     mapping(uint => string) public releaseDates;
     mapping(uint => uint) public rewards;
+    string public bondTokenSymbol;
 
     function userIdsLength(address user) public view returns(uint) {
         return userIds[user].length;
@@ -63,7 +65,7 @@ contract GTONBondNFT is NFT, IBondStorage, AdminAccess {
                     tokenId: tokenId,
                     releaseDate: releaseDates[tokenId],
                     reward: rewards[tokenId],
-                    tokenSymbol: "GTON"
+                    tokenSymbol: bondTokenSymbol
                 })
             );
     }

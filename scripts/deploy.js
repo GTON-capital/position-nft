@@ -18,20 +18,24 @@ async function main() {
       NFTDescriptor: nftDescriptorLib.address,
     },
   });
-  const bondNFT = await BondNFT.deploy("gtonNFT", "gtonNFT");
+  const name = "GTON NFT";
+  const symbol = "gtonNFT";
+  const bondTokenSymbol = "GTON";
+  const bondNFT = await BondNFT.deploy(name, symbol, bondTokenSymbol);
   await bondNFT.deployed();
 
   console.log("Token address: ", bondNFT.address);
 
   // The delay is necessary to avoid "the address does not have bytecode" error
-  await delay(30000);
+  await delay(50000);
 
   await hre.run("verify:verify", {
     address: bondNFT.address,
     network: "polygonMumbai",
     constructorArguments: [
-      "gtonNFT",
-      "gtonNFT",
+      name,
+      symbol,
+      bondTokenSymbol
     ],
     libraries: {
       NFTDescriptor: nftDescriptorLib.address,

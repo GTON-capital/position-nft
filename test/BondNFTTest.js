@@ -12,7 +12,7 @@ describe("BondNFT", function () {
         NFTDescriptor: nftDescriptorLib.address,
       },
     });
-    const bondNFT = await BondNFT.deploy("gtonNFT", "gtonNFT");
+    const bondNFT = await BondNFT.deploy("GTON NFT", "gtonNFT", "GTON");
     await bondNFT.deployed();
   });
 });

@@ -19,7 +19,7 @@ library NFTDescriptor {
 
     function constructTokenURI(URIParams memory params) public pure returns (string memory) {
         string memory name = string(abi.encodePacked(params.tokenSymbol, '-NFT'));
-        string memory description = generateDescription();
+        string memory description = generateDescription(params);
         string memory image = Base64.encode(bytes(generateSVGImage(params)));
 
         return
@@ -44,42 +44,18 @@ library NFTDescriptor {
             );
     }
 
-    function escapeQuotes(string memory symbol) internal pure returns (string memory) {
-        bytes memory symbolBytes = bytes(symbol);
-        uint8 quotesCount = 0;
-        for (uint8 i = 0; i < symbolBytes.length; i++) {
-            if (symbolBytes[i] == '"') {
-                quotesCount++;
-            }
-        }
-        if (quotesCount > 0) {
-            bytes memory escapedBytes = new bytes(symbolBytes.length + (quotesCount));
-            uint256 index;
-            for (uint8 i = 0; i < symbolBytes.length; i++) {
-                if (symbolBytes[i] == '"') {
-                    escapedBytes[index++] = '\\';
-                }
-                escapedBytes[index++] = symbolBytes[i];
-            }
-            return string(escapedBytes);
-        }
-        return symbol;
-    }
-
-    function addressToString(address addr) internal pure returns (string memory) {
-        return (uint256(uint160(addr))).toHexString(20);
-    }
-
     function toColorHex(uint256 base, uint256 offset) internal pure returns (string memory str) {
         return string((base >> offset).toHexStringNoPrefix(3));
     }
 
-    function generateDescription() private pure returns (string memory) {
+    function generateDescription(URIParams memory params) private pure returns (string memory) {
         return
             string(
                 abi.encodePacked(
-                    'This NFT represents a position in GTON token boinding ',
-                    'The owner of this NFT can claim sGTON after bond expiration.\\n'
+                    'This NFT represents a position in ',
+                    params.tokenSymbol,
+                    ' token boinding. ',
+                    'The owner of this NFT can claim tokens after bond expiration.\\n'
                 )
             );
     }
