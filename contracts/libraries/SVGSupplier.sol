@@ -85,7 +85,7 @@ library SVGSupplier {
                 ' Bonding NFT',
                 '</text><text x="20" y="70">Bond reward, ',
                 params.tokenSymbol,
-                ': ',
+                ' wei: ',
                 params.reward.toString(),
                 '</text><text x="20" y="100">Claim after: ',
                 params.releaseDate,
