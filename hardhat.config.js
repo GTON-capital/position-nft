@@ -1,6 +1,6 @@
 require("@nomiclabs/hardhat-waffle");
 require("@nomiclabs/hardhat-etherscan");
-require("dotenv").config()
+require("dotenv").config();
 
 const { PRIVATEKEY, ETHERSCAN, POLYGONSCAN, FTMSCAN } = process.env;
 
@@ -17,6 +17,12 @@ module.exports = {
       url: "https://matic-mumbai.chainstacklabs.com",
       accounts: [PRIVATEKEY],
       gasPrice: 35000000000,
+    },
+    ftmTestnet: {
+      networkId: 4002,
+      url: "https://rpc.testnet.fantom.network",
+      accounts: [PRIVATEKEY],
+      // gasPrice: 35000000000,
     }
   },
   etherscan: {
