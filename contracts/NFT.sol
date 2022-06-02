@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.12;
+pragma solidity ^0.8.14;
 
 import '@openzeppelin/contracts/token/ERC721/ERC721.sol';
 import '@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol';
@@ -10,7 +10,10 @@ abstract contract NFT is ERC721, ERC721Burnable {
 
     Counters.Counter private _tokenIdTracker;
 
-    constructor(string memory _name, string memory _symbol) ERC721(_name, _symbol) {
+    constructor(
+        string memory name_,
+        string memory symbol_
+    ) ERC721(name_, symbol_) {
     }
 
     function _safeMint(address to, bytes memory data) internal virtual returns (uint256) {

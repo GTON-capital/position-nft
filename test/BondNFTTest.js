@@ -7,12 +7,21 @@ describe("BondNFT", function () {
     const nftDescriptorLib = await NFTDescriptor.deploy();
     await nftDescriptorLib.deployed();
 
+    const DateTimeLibrary = await ethers.getContractFactory("NFTDescriptor");
+    const dateTimeLibrary = await DateTimeLibrary.deploy();
+    await dateTimeLibrary.deployed();
+
     const BondNFT = await ethers.getContractFactory("GTONBondNFT", {
       libraries: {
         NFTDescriptor: nftDescriptorLib.address,
       },
     });
-    const bondNFT = await BondNFT.deploy("GTON NFT", "gtonNFT", "GTON");
+    const bondNFT = await BondNFT.deploy(
+      "GTON NFT",
+      "gtonNFT",
+      "GTON",
+      dateTimeLibrary.address,
+    );
     await bondNFT.deployed();
   });
 });

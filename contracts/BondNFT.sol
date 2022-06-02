@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.12;
+pragma solidity ^0.8.14;
 
 import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 import '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol';
 
 import './NFT.sol';
 import './libraries/NFTDescriptor.sol';
-import './libraries/BokkyPooBahsDateTimeLibrary.sol';
+import './interfaces/IBokkyPooBahsDateTimeLibrary.sol';
 import './libraries/HexStrings.sol';
 import './interfaces/IBondStorage.sol';
 import './interfaces/AdminAccess.sol';
@@ -16,8 +16,16 @@ contract GTONBondNFT is NFT, IBondStorage, AdminAccess {
     using SafeERC20 for IERC20;
     using Strings for uint256;
 
-    constructor(string memory _name, string memory _symbol, string memory _bondTokenSymbol) NFT(_name, _symbol) {
-        bondTokenSymbol = _bondTokenSymbol;
+    address bokkyPooBahsAddress;
+
+    constructor(
+        string memory name_, 
+        string memory symbol_,
+        string memory bondTokenSymbol_,
+        address bokkyPooBahsAddress_
+    ) NFT(name_, symbol_) {
+        bondTokenSymbol = bondTokenSymbol_;
+        bokkyPooBahsAddress = bokkyPooBahsAddress_;
     }
 
     /* ========== STATE VARIABLES ========== */
@@ -36,7 +44,7 @@ contract GTONBondNFT is NFT, IBondStorage, AdminAccess {
         tokenId = _safeMint(to, '');
         userIds[to].push(tokenId);
         issuedBy[tokenId] = msg.sender;
-        (uint year, uint month, uint day) = BokkyPooBahsDateTimeLibrary.timestampToDate(releaseTimestamp);
+        (uint year, uint month, uint day) = IBokkyPooBahsDateTimeLibrary(bokkyPooBahsAddress).timestampToDate(releaseTimestamp);
         releaseDates[tokenId] = string(
             abi.encodePacked(
                 day.toString(),

@@ -1,5 +1,10 @@
 const hre = require("hardhat");
 
+const dateTimeLibraryRopsten = "0x947cc35992e6723de50bf704828a01fd2d5d6641";
+const dateTimeLibraryEthereum = "0x23d23d8f243e57d0b924bff3a3191078af325101";
+
+const dateTimeLibrary = dateTimeLibraryRopsten;
+
 async function main() {
   const [deployer] = await ethers.getSigners();
 
@@ -21,7 +26,12 @@ async function main() {
   const name = "GTON NFT";
   const symbol = "gtonNFT";
   const bondTokenSymbol = "GTON";
-  const bondNFT = await BondNFT.deploy(name, symbol, bondTokenSymbol);
+  const bondNFT = await BondNFT.deploy(
+    name,
+    symbol,
+    bondTokenSymbol,
+    dateTimeLibrary,
+  );
   await bondNFT.deployed();
 
   console.log("Token address:", bondNFT.address);
@@ -35,7 +45,8 @@ async function main() {
     constructorArguments: [
       name,
       symbol,
-      bondTokenSymbol
+      bondTokenSymbol,
+      dateTimeLibrary,
     ],
     libraries: {
       NFTDescriptor: nftDescriptorLib.address,
